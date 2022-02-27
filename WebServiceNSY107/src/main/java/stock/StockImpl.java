@@ -14,5 +14,9 @@ public class StockImpl implements StockI {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void reponse(long reference, long temps) {
+		return 0;
+	}
 
 }
