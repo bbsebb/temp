@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://example.com/catalog"
+	xmlns:tns="http://example.com/catalog.wsdl"
+	xmlns:xsd1="http://example.com/catalog.xsd"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+	<types>
+		<schema targetNamespace="http://example.com/catalog"
+			xmlns="http://www.w3.org/2001/XMLSchema">
+			<element name="listeProduits">
+
+			</element>
+			<element name="listeProduitsResponse">
+				<complexType>
+					<sequence>
+						<element maxOccurs="unbounded" name="listeProduitsReturn"
+							type="impl:Produit" />
+					</sequence>
+				</complexType>
+			</element>
+			<complexType name="Produit">
+				<sequence>
+					<element name="desc" nillable="true" type="xsd:string" />
+					<element name="id" type="xsd:long" />
+					<element name="price" type="xsd:double" />
+				</sequence>
+			</complexType>
+		</schema>
+	</types>
+
+	<message name="listeProduitsRequest">
+
+		<part element="impl:listeProduits" name="parameters">
+
+		</part>
+
+	</message>
+
+	<message name="listeProduitsResponse">
+
+		<part element="impl:listeProduitsResponse" name="parameters">
+
+		</part>
+
+	</message>
+
+	<portType name="CatalogImpl">
+
+		<operation name="listeProduits">
+
+			<input message="impl:listeProduitsRequest"
+				name="listeProduitsRequest">
+
+			</input>
+
+			<output message="impl:listeProduitsResponse"
+				name="listeProduitsResponse">
+
+			</output>
+
+		</operation>
+
+	</portType>
+
+	<binding name="CatalogImplSoapBinding"
+		type="impl:CatalogImplPortType">
+
+		<wsdlsoap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<operation name="listeProduits">
+
+			<wsdlsoap:operation soapAction="" />
+
+			<input name="listeProduitsRequest">
+
+				<wsdlsoap:body use="literal" />
+
+			</input>
+
+			<output name="listeProduitsResponse">
+
+				<wsdlsoap:body use="literal" />
+
+			</output>
+
+		</operation>
+
+	</binding>
+
+	<service name="CatalogImplService">
+
+		<port binding="impl:CatalogImplSoapBinding" name="CatalogImpl">
+
+			<wsdlsoap:address
+				location="http://exemple.com/CatalogImpl" />
+
+		</port>
+
+	</service>
+
+</definitions>

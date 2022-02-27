@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://example.com/stock"
+	xmlns:tns="http://example.com/stock.wsdl"
+	xmlns:xsd1="http://example.com/stock.xsd"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+	<!--Définition des types de données -->
+	<types>
+		<schema elementFormDefault="qualified"
+			targetNamespace="http://stock"
+			xmlns="http://www.w3.org/2001/XMLSchema">
+			<element name="nbrExemplaire">
+				<complexType>
+					<sequence>
+						<element name="Id" type="xsd:long" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="nbrExemplaireResponse">
+				<complexType>
+					<sequence>
+						<element name="nbrExemplaireReturn" type="xsd:long" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="achatExemplaire">
+				<complexType>
+					<sequence>
+						<element name="Id" type="xsd:long" />
+						<element name="nbr" type="xsd:long" />
+						<element name="address" type="impl:Address" />
+					</sequence>
+				</complexType>
+			</element>
+			<complexType name="Address">
+				<sequence>
+					<element name="nom" nillable="true" type="xsd:string" />
+					<element name="numeroRue" type="xsd:int" />
+					<element name="prenom" nillable="true" type="xsd:string" />
+					<element name="rue" nillable="true" type="xsd:string" />
+					<element name="ville" nillable="true" type="xsd:string" />
+				</sequence>
+			</complexType>
+			<element name="achatExemplaireResponse">
+				<complexType>
+					<sequence>
+						<element name="achatExemplaireReturn" type="xsd:boolean" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+<!--Déclaration des messages -->
+	<message name="nbrExemplaireRequest">
+
+		<part element="impl:nbrExemplaire" name="parameters">
+
+		</part>
+
+	</message>
+
+	<message name="nbrExemplaireResponse">
+
+		<part element="impl:nbrExemplaireResponse" name="parameters">
+
+		</part>
+
+	</message>
+
+	<message name="achatExemplaireResponse">
+
+		<part element="impl:achatExemplaireResponse" name="parameters">
+
+		</part>
+
+	</message>
+
+	<message name="achatExemplaireRequest">
+
+		<part element="impl:achatExemplaire" name="parameters">
+
+		</part>
+
+	</message>
+	<!--Déclaration des opérations associées aux messages -->
+	<portType name="StockImpl">
+
+		<operation name="nbrExemplaire">
+
+			<input message="impl:nbrExemplaireRequest"
+				name="nbrExemplaireRequest">
+
+			</input>
+
+			<output message="impl:nbrExemplaireResponse"
+				name="nbrExemplaireResponse">
+
+			</output>
+
+		</operation>
+
+		<operation name="achatExemplaire">
+
+			<input message="impl:achatExemplaireRequest"
+				name="achatExemplaireRequest">
+
+			</input>
+
+			<output message="impl:achatExemplaireResponse"
+				name="achatExemplaireResponse">
+
+			</output>
+
+		</operation>
+
+	</portType>
+	<!--Définition de la liaison WSDL – SOAP -->
+	<binding name="StockImplSoapBinding" type="impl:StockImpl">
+
+		<binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<operation name="nbrExemplaire">
+
+			<wsdlsoap:operation soapAction="" />
+
+			<input name="nbrExemplaireRequest">
+
+				<wsdlsoap:body use="literal" />
+
+			</input>
+
+			<output name="nbrExemplaireResponse">
+
+				<wsdlsoap:body use="literal" />
+
+			</output>
+
+		</operation>
+
+		<operation name="achatExemplaire">
+
+			<operation soapAction="" />
+
+			<input name="achatExemplaireRequest">
+
+				<wsdlsoap:body use="literal" />
+
+			</input>
+
+			<output name="achatExemplaireResponse">
+
+				<body use="literal" />
+
+			</output>
+
+		</operation>
+
+	</binding>
+	<!--Déclaration des ports (groupes d'opérations et protocoles d'accès) -->
+	<service name="StockImplService">
+
+		<port binding="impl:StockImplSoapBinding" name="StockImpl">
+
+			<wsdlsoap:address
+				location="http://exemple.com/StockImpl" />
+
+		</port>
+
+	</service>
+
+</definitions>

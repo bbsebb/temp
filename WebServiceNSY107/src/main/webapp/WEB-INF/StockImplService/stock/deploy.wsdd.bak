@@ -1,0 +1,42 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from StockImplService WSDL service -->
+
+  <service name="StockImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://stock"/>
+      <parameter name="wsdlServiceElement" value="StockImplService"/>
+      <parameter name="schemaQualified" value="http://stock"/>
+      <parameter name="wsdlServicePort" value="StockImpl"/>
+      <parameter name="className" value="stock.StockImplSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="StockImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="nbrExemplaire" qname="operNS:nbrExemplaire" xmlns:operNS="http://stock" returnQName="retNS:nbrExemplaireReturn" xmlns:retNS="http://stock" returnType="rtns:long" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:Id" xmlns:pns="http://stock" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="achatExemplaire" qname="operNS:achatExemplaire" xmlns:operNS="http://stock" returnQName="retNS:achatExemplaireReturn" xmlns:retNS="http://stock" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:Id" xmlns:pns="http://stock" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:nbr" xmlns:pns="http://stock" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:address" xmlns:pns="http://stock" type="tns:Address" xmlns:tns="http://stock"/>
+      </operation>
+      <parameter name="allowedMethods" value="nbrExemplaire achatExemplaire"/>
+
+      <typeMapping
+        xmlns:ns="http://stock"
+        qname="ns:Address"
+        type="java:stock.Address"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
